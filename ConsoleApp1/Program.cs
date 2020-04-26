@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -36,7 +37,10 @@ namespace ConsoleApp1
             //Sum(new int[] { -1000, 1000});
             // Console.WriteLine(PassingCars(new int[] {0,1,0,1,1 }));
             // repeatingChar("hellooaa");
-            MaximumWordCount("Forget  CVs..Save time . x x");
+            // MaximumWordCount("Forget  CVs..Save time . x x");
+            //Console.WriteLine(PascalTriangle(80));
+            //ParseRomanNumerals("MCMLXI");
+            jumpingOnClouds(new int[] { 0,0,1,0,0,1,0});
             stopwatch.Stop();
 
             Console.WriteLine(stopwatch.ElapsedMilliseconds);
@@ -373,5 +377,196 @@ namespace ConsoleApp1
             }
             return maxWordCount;
         }
+
+        public static string FindElement(int[] arr,int k)
+        {
+            for (int i = 0; i < arr.Count(); i++)
+        {
+                if (arr[i] == k)
+                    return "YES";
+            }
+
+            return "No";
+        }
+
+        public static int PascalTriangle(int input)
+        {
+            if (input == 0)
+                return 1;
+            int total = 1;
+
+            for (int i = 1; i <= input; i++)
+            {
+                total = total * 2;
+                if (total > (int.MaxValue / 2) & (i < input - 1)) // if the current round is not the final and the next value will be more that int max value
+                    return -1;
+            }
+            return total;
+        }
+
+        public static int ParseRomanNumerals(string input)
+        {
+            int[] numbers = new int[input.Length];
+            for (int i = 0; i < input.Length; i++)
+            {
+                if (input[i] == 'M')
+                    numbers[i] = 1000;
+                if (input[i] == 'D')
+                    numbers[i] = 500;
+                if (input[i] == 'C')
+                    numbers[i] = 100;
+                if (input[i] == 'L')
+                    numbers[i] = 50;
+                if (input[i] == 'X')
+                    numbers[i] = 10;
+                if (input[i] == 'V')
+                    numbers[i] = 5;
+                if (input[i] == 'I')
+                    numbers[i] = 1;
+
+            }
+            int total = 0;
+
+        for (int idx = 0; idx < numbers.Length; idx++)
+            {
+                total += numbers[idx];
+                if (idx >0)  
+                {
+                    if (numbers[idx - 1] < numbers[idx])
+                    {
+                        total = total - numbers[idx]-numbers[idx-1];
+                        total += numbers[idx] - numbers[idx - 1];
+                    }
+                }
+            }
+            return total;
+        }
+        public static int MaxDepth(TreeNode root)
+        {
+            int depthLeft = 0;
+            int depthRight = 0;
+            if (root.left != null)
+                depthLeft = getLeft(root, depthLeft);
+
+            if (root.right != null)
+                depthRight = getRight(root, depthRight);
+
+            if (depthRight > depthLeft)
+                return depthRight;
+            else return depthLeft;
+        }
+        private static int getLeft(TreeNode Node,int count)
+        {
+            count++;
+            if (Node.left != null)
+                return count + getLeft(Node.left, count);
+            else
+                return count;
+        }
+        private static int getRight(TreeNode Node, int count)
+        {
+            count++;
+            if (Node.right != null)
+                return count + getRight(Node.right, count);
+            else
+                return count;
+
+        }
+
+        public static int sockMerchant(int n, int[] ar)
+        {
+            Hashtable ht = new Hashtable();
+            for (int i = 0; i < ar.Length; i++)
+            {
+                if(ht.ContainsKey(ar[i]))
+                {
+                    int temp = (int)ht[ar[i]];
+                    temp++;
+                    ht[ar[i]] = temp;
+                }
+                else
+                {
+                    ht.Add(ar[i], 1);
+                }
+            }
+            int socksCount = 0 ;
+            foreach (int item in ht.Keys)
+            {
+                if ((int)ht[item] == 1)
+                    continue;
+                int def = (int)ht[item] % 2;
+                if ( def == 0)
+                {
+                    socksCount += (int)ht[item] / 2;
+                }
+                else
+                {
+                    socksCount += ((int)ht[item]-def) / 2;
+                }
+            }
+            return socksCount;
+        }
+        public static int countingValleys(int n, string s)
+        {
+            int valliesCount = 0;
+            int seaLevel = 0;
+            int prevStep = 0;
+            foreach (char step in s)
+            {
+                prevStep = seaLevel;
+                if (step == 'D')
+                    seaLevel--;
+                else if (step == 'U')
+                    seaLevel++;
+
+                if(prevStep == 0 && seaLevel<0)
+                    {
+                    valliesCount++;
+                }
+
+            }
+            return valliesCount;
+
+        }
+
+        public static int jumpingOnClouds(int[] c)
+        {
+
+            int jumbsCount = 0;
+            for (int i = 0; i < c.Length; i++)
+            {
+                if (i == c.Length - 1)
+                {
+                   // jumbsCount++;
+                    continue;
+                }
+                if (i == c.Length - 2)
+                {
+                    jumbsCount++;
+                    continue;
+                }
+                if (c[i + 2] == 0)
+                {
+
+                    i++;
+                }
+                jumbsCount++;
+
+            }
+            return jumbsCount;
+        }
+
     }
+   
+      
+   
+    //Definition for a binary tree node.
+    public class TreeNode
+    {
+   public int val;
+   public TreeNode left;
+   public TreeNode right;
+   public TreeNode(int x) { val = x; }
+   }
+
 }
