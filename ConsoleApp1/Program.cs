@@ -40,7 +40,8 @@ namespace ConsoleApp1
             // MaximumWordCount("Forget  CVs..Save time . x x");
             //Console.WriteLine(PascalTriangle(80));
             //ParseRomanNumerals("MCMLXI");
-            jumpingOnClouds(new int[] { 0,0,1,0,0,1,0});
+            //jumpingOnClouds(new int[] { 0,0,1,0,0,1,0});
+            repeatedString("kmretasscityylpdhuwjirnqimlkcgxubxmsxpypgzxtenweirknjtasxtvxemtwxuarabssvqdnktqadhyktagjxoanknhgilnm", 736778906400);
             stopwatch.Stop();
 
             Console.WriteLine(stopwatch.ElapsedMilliseconds);
@@ -554,6 +555,22 @@ namespace ConsoleApp1
 
             }
             return jumbsCount;
+        }
+
+        public static long repeatedString(string s, long n)
+        {
+            if (s.Length == 1 && s == "a")
+                return n;
+            StringBuilder str = new StringBuilder();
+            str.Append(s);
+            while (str.ToString().Length <= n)
+            {
+                str.Append(s);
+            }
+            s = s.Substring(0, (int)n);
+
+            char[] chars =s.ToCharArray().Where(x=>x=='a').ToArray();
+            return chars.Length;
         }
 
     }
