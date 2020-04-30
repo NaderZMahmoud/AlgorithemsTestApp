@@ -588,6 +588,28 @@ namespace ConsoleApp1
             return i + 1;
         }
 
+        public static ListNode RemoveNthFromEnd(ListNode head, int n)
+        {
+
+            ListNode current = head;
+
+            int currentIndex = 0;
+            while (current.next != null)
+            {
+                currentIndex++;
+                if (n == currentIndex - 2)
+                {
+                    current.val = current.next.val;
+                    current.next = current.next.next;
+                }
+                else
+                {
+                    current = current.next;
+                }
+            }
+            return head;
+        }
+
     }
    
       
@@ -600,5 +622,16 @@ namespace ConsoleApp1
    public TreeNode right;
    public TreeNode(int x) { val = x; }
    }
+    
+ // Definition for singly-linked list.
+  public class ListNode {
+      public int val;
+      public ListNode next;
+      public ListNode(int val=0, ListNode next=null) {
+          this.val = val;
+          this.next = next;
+      }
+  }
+ 
 
 }
